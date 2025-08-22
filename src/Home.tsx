@@ -32,7 +32,7 @@ function Home() {
                 </div>
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">RentAPet</a>
+                <a className="btn btn-ghost text-xl" onClick={() => {navigate('/list')}}>RentAPet</a>
             </div>
             <div className="navbar-end">
                 <button className="btn btn-ghost btn-circle">

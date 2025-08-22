@@ -6,10 +6,10 @@ import List from "./List.tsx";
 import Pet from "./Pet.tsx";
 
 export interface pet{
+    breed :string,
     id :string,
+    imgurl :string,
     name :string,
-    bread :string,
-    image :string,
     sold :boolean
 
 }
@@ -36,21 +36,6 @@ export const routesAtom = atom<RouteObject[]>([
     },
     ]);
 
-export const petsAtom = atom<pet[]>([
-    {
-        id: "25",
-        name: "Pikachu",
-        bread: "Electric Mouse",
-        image: "https://i.imgur.com/RKe0ivQ.jpg",
-        sold: false
-    },
-    {
-        id: "104",
-        name: "Cubone",
-        bread: "Bone idk",
-        image: "https://cdn.discordapp.com/attachments/1241068328735215676/1408160675905146971/latest.png?ex=68a8bb53&is=68a769d3&hm=f849fea74dc77a750fc289fb6345bc948149bce69c9e3101a6e20d5aa49fb14c&",
-        sold: false
-    }
-])
+export const petsAtom = atom<pet[]>([])
 
 export const selectedPetAtom = atom<pet | null>(null)

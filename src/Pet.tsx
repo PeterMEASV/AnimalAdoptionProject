@@ -29,18 +29,26 @@ function Pet() {
                 <h1>Pet Details</h1>
                 <div className="card bg-base-100 w-96 shadow-sm">
                     <figure>
-                        <img src={pet.image} alt={pet.name}/>
+                        <img src={pet.imgurl} alt={pet.name}/>
                     </figure>
                     <div className="card-body">
                         <h2 className="card-title">{pet.name}</h2>
-                        <p>Breed: {pet.bread}</p>
+                        <p>Breed: {pet.breed}</p>
                         <p>ID: {pet.id}</p>
                         <p>{pet.sold ? "Status: Adopted" : "Status: Available"}</p>
                         <div className="card-actions justify-end mt-4">
                             <button className="btn btn-secondary" onClick={handleToggleSold}>
                                 {pet.sold ? "Mark as Available" : "Mark as Adopted"}
                             </button>
-                            <button className="btn btn-error" onClick={handleDelete}>
+                            <button className="btn btn-error" onClick={() => {
+                                if(pet.id != "1" && pet.id != "2")
+                                {
+                                    handleDelete();
+                            }
+                            else {
+                                alert("You can't delete this pet");
+                            }
+                            }}>
                                 Delete
                             </button>
                         </div>

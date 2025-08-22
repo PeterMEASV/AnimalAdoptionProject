@@ -1,6 +1,10 @@
 import {useNavigate} from "react-router";
 import {useSetAtom, useAtomValue} from "jotai";
 import {selectedPetAtom, type pet, petsAtom} from "./Atoms.tsx";
+import {useEffect} from "react";
+import getPets from "./api.tsx";
+import refreshAnimals from "./refreshAnimals.tsx";
+
 
 function List() {
 
@@ -20,11 +24,11 @@ function List() {
                 {pets.map((pet) => (
                     <div key={pet.id} className="card bg-base-100 w-96 shadow-sm mb-4">
                         <figure>
-                            <img src={pet.image} alt={pet.name}/>
+                            <img src={pet.imgurl} alt={pet.name}/>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">{pet.name}</h2>
-                            <p>{pet.bread}</p>
+                            <p>{pet.breed}</p>
                             <div className="card-actions justify-end">
                                 <button className="btn btn-primary" onClick={() => handleRentClick(pet)}>View Details
                                 </button>

@@ -1,34 +1,47 @@
-import {useState} from "react";
-import {useNavigate} from "react-router";
-import {useSetAtom} from "jotai";
-import {petsAtom} from "./Atoms.tsx";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useSetAtom, useAtomValue } from "jotai";
+import { petsAtom, type pet } from "./Atoms.tsx";
+import { Api } from "../Api.ts";
+
+const ActivityApi = new Api({ baseURL: "https://api-divine-grass-2111.fly.dev" });
 
 function CreateAnimal() {
     const navigate = useNavigate();
     const setPets = useSetAtom(petsAtom);
+    const pets = useAtomValue(petsAtom); // get current pets
 
     const [name, setName] = useState('');
-    const [bread, setBread] = useState('');
-    const [image, setImage] = useState('');
+    const [breed, setBreed] = useState('');
+    const [imgurl, setImage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!name || !bread || !image) {
+        if (!name || !breed || !imgurl) {
             alert("Please fill out all fields.");
             return;
         }
 
-        const newPet = {
-            id: Date.now().toString(),
-            name,
-            bread,
-            image,
-            sold: false
-        };
+        try {
+            // Call the API
+            const response = await ActivityApi.createPet.petCreatePet({
+                name,
+                breed,
+                imgurl,
+            });
 
-        setPets(prevPets => [...prevPets, newPet]);
-        navigate('/list');
+            const createdPet = response.data as pet;
+
+            // Update petsAtom
+            setPets([...pets, createdPet]);
+
+            // Navigate after success
+            navigate('/list');
+        } catch (error) {
+            console.error(error);
+            alert("Failed to create pet.");
+        }
     };
 
     return (
@@ -56,8 +69,8 @@ function CreateAnimal() {
                         type="text"
                         placeholder="Enter pet breed"
                         className="input input-bordered"
-                        value={bread}
-                        onChange={(e) => setBread(e.target.value)}
+                        value={breed}
+                        onChange={(e) => setBreed(e.target.value)}
                         required
                     />
                 </div>
@@ -69,7 +82,7 @@ function CreateAnimal() {
                         type="text"
                         placeholder="Enter image URL"
                         className="input input-bordered"
-                        value={image}
+                        value={imgurl}
                         onChange={(e) => setImage(e.target.value)}
                         required
                     />
