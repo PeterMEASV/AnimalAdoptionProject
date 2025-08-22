@@ -4,6 +4,7 @@ import Home from "./Home.tsx";
 import CreateAnimal from "./CreateAnimal.tsx";
 import List from "./List.tsx";
 import Pet from "./Pet.tsx";
+import UpdateAnimal from "./UpdateAnimal.tsx";
 
 export interface pet{
     breed :string,
@@ -29,9 +30,13 @@ export const routesAtom = atom<RouteObject[]>([
             },
             {
                 path: 'pet/:petID',
-                element: <Pet />
+                element: <Pet/>
+            },
+            {
+                path: 'pet/:petID/update', //might be a better way to do this?
+                element: <UpdateAnimal />
             }
-        ]
+                ]
 
     },
     ]);

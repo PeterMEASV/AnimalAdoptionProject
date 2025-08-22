@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSetAtom, useAtomValue } from "jotai";
 import { petsAtom, type pet } from "./Atoms.tsx";
-import { Api } from "../Api.ts";
+import {ActivityApi} from "./ActivityAPI.tsx";
 
-const ActivityApi = new Api({ baseURL: "https://api-divine-grass-2111.fly.dev" });
+
 
 function CreateAnimal() {
     const navigate = useNavigate();
     const setPets = useSetAtom(petsAtom);
-    const pets = useAtomValue(petsAtom); // get current pets
+    const pets = useAtomValue(petsAtom);
 
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
@@ -24,7 +24,6 @@ function CreateAnimal() {
         }
 
         try {
-            // Call the API
             const response = await ActivityApi.createPet.petCreatePet({
                 name,
                 breed,
@@ -33,10 +32,8 @@ function CreateAnimal() {
 
             const createdPet = response.data as pet;
 
-            // Update petsAtom
             setPets([...pets, createdPet]);
 
-            // Navigate after success
             navigate('/list');
         } catch (error) {
             console.error(error);

@@ -1,6 +1,8 @@
 import {useNavigate, useParams} from "react-router";
 import {useAtom} from "jotai";
 import {petsAtom} from "./Atoms.tsx";
+import {updatePets} from "./api.tsx";
+import {ActivityApi} from "./ActivityAPI.tsx";
 
 function Pet() {
     const navigate = useNavigate();
@@ -9,12 +11,19 @@ function Pet() {
 
     const pet = pets.find(p => p.id === petID);
 
-    const handleToggleSold = () => {
+    const handleToggleSold = async () => {
         if (!pet) return;
-        setPets(pets.map(p => p.id === petID ? {...p, sold: !p.sold} : p));
+
+        let newPet = {...pet, sold: !pet.sold};
+        await updatePets(newPet, setPets, pets);
     };
 
     const handleDelete = () => {
+
+        if (!pet) return;
+        console.log("Deleting pet with ID: " + petID);
+        ActivityApi.deletePet.petDeletePet({id: petID});
+
         setPets(pets.filter(p => p.id !== petID));
         navigate('/list');
     };
@@ -37,20 +46,13 @@ function Pet() {
                         <p>ID: {pet.id}</p>
                         <p>{pet.sold ? "Status: Adopted" : "Status: Available"}</p>
                         <div className="card-actions justify-end mt-4">
+                            <button className="btn btn-primary" onClick={() => navigate('/pet/' + petID + '/update')}>Update pet</button>
                             <button className="btn btn-secondary" onClick={handleToggleSold}>
                                 {pet.sold ? "Mark as Available" : "Mark as Adopted"}
                             </button>
                             <button className="btn btn-error" onClick={() => {
-                                if(pet.id != "1" && pet.id != "2")
-                                {
-                                    handleDelete();
-                            }
-                            else {
-                                alert("You can't delete this pet");
-                            }
-                            }}>
-                                Delete
-                            </button>
+                                pet.id !== "1" && pet.id !== "2" ? handleDelete() : alert("You can't delete this pet");
+                            }}>Delete</button>
                         </div>
                     </div>
                 </div>

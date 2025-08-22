@@ -1,4 +1,8 @@
 import {Api} from "../Api.ts";
+import {ActivityApi} from "./ActivityAPI.tsx";
+import translatingDTOtoPet from "./translatingDTOtoPet.tsx";
+import {type pet, petsAtom} from "./Atoms.tsx";
+import {useAtom} from "jotai";
 
 async function getPets() {
     const url = "https://api-divine-grass-2111.fly.dev/GetPets";
@@ -17,3 +21,28 @@ async function getPets() {
     }
 }
 export default getPets;
+
+export async function updatePets(pet: pet, setPets: (p: pet[]) => void, pets: pet[])
+{
+    try
+    {
+        const response = await ActivityApi.updatePet.petUpdatePet({
+            id: pet.id,
+            name: pet.name,
+            breed: pet.breed,
+            imgurl: pet.imgurl,
+            sold: pet.sold,
+        })
+
+        const updatedPet = translatingDTOtoPet(response.data);
+
+        setPets(pets.map(p => (p.id === pet.id ? updatedPet : p)));
+        console.log("Updated situation: " + JSON.stringify(updatedPet));
+
+    }
+    catch (error)
+    {
+        console.error(error);
+        alert("Failed to update pet status.");
+    }
+}
