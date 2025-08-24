@@ -1,3 +1,10 @@
+# Animal Adoption project
+React application created by Peteris Meiris and David Jonas.
+
+This application is a simple React demo designed to showcase the concepts covered during the first two weeks of the Programming II (E2025) course at EASV.
+
+---------
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
