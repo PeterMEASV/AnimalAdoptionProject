@@ -1,5 +1,6 @@
 import './App.css'
 import {Outlet, useNavigate} from "react-router";
+import {ToastContainer} from "react-toastify";
 
 function Home() {
 
@@ -7,6 +8,7 @@ function Home() {
 
   return (
     <>
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">

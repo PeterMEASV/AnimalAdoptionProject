@@ -3,12 +3,12 @@ import {useNavigate, useParams} from "react-router";
 import {useAtom} from "jotai";
 import {petsAtom} from "./Atoms.tsx";
 import {updatePets} from "./api.tsx";
+import {toast} from "react-toastify";
 
 function UpdateAnimal() {
     const navigate = useNavigate();
     const {petID} = useParams();
     const [pets, setPets] = useAtom(petsAtom);
-
     const petToUpdate = pets.find(p => p.id === petID);
 
     const [name, setName] = useState('');
@@ -72,7 +72,7 @@ function UpdateAnimal() {
                            className="input input-bordered" required/>
                 </div>
                 <div className="form-control mt-6">
-                    <button type="submit" className="btn btn-primary">Gem Ændringer</button>
+                    <button type="submit" className="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>

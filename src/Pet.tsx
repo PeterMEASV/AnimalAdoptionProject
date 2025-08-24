@@ -3,8 +3,10 @@ import {useAtom} from "jotai";
 import {petsAtom} from "./Atoms.tsx";
 import {updatePets} from "./api.tsx";
 import {ActivityApi} from "./ActivityAPI.tsx";
+import {toast} from "react-toastify";
 
 function Pet() {
+    const DeleteSuccess = () => toast.success("Pet deleted successfully.");
     const navigate = useNavigate();
     const {petID} = useParams();
     const [pets, setPets] = useAtom(petsAtom);
@@ -23,7 +25,7 @@ function Pet() {
         if (!pet) return;
         console.log("Deleting pet with ID: " + petID);
         ActivityApi.deletePet.petDeletePet({id: petID});
-
+        DeleteSuccess();
         setPets(pets.filter(p => p.id !== petID));
         navigate('/list');
     };

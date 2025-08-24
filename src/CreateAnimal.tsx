@@ -3,10 +3,13 @@ import { useNavigate } from "react-router";
 import { useSetAtom, useAtomValue } from "jotai";
 import { petsAtom, type pet } from "./Atoms.tsx";
 import {ActivityApi} from "./ActivityAPI.tsx";
+import {toast, ToastContainer} from "react-toastify";
 
 
 
 function CreateAnimal() {
+    const errorToast = () => toast.error("Error creating pet.");
+    const successToast = () => toast.success("Pet created successfully.");
     const navigate = useNavigate();
     const setPets = useSetAtom(petsAtom);
     const pets = useAtomValue(petsAtom);
@@ -33,10 +36,12 @@ function CreateAnimal() {
             const createdPet = response.data as pet;
 
             setPets([...pets, createdPet]);
+            successToast();
 
             navigate('/list');
         } catch (error) {
             console.error(error);
+            errorToast();
             alert("Failed to create pet.");
         }
     };

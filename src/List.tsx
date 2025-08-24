@@ -19,8 +19,9 @@ function List() {
 
     return (
         <>
-            <div className="flex flex-col items-center">
-                <h1>List</h1>
+            <h1>List</h1>
+            <div className="flex justify-center">
+            <div className="grid grid-cols-3 gap-6">
                 {pets.map((pet) => (
                     <div key={pet.id} className="card bg-base-100 w-96 shadow-sm mb-4">
                         <figure>
@@ -36,6 +37,7 @@ function List() {
                         </div>
                     </div>
                 ))}
+            </div>
             </div>
         </>
     )
